@@ -1,0 +1,149 @@
+/* General dialog options */
+.dialog-options {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Add this property to center the buttons horizontally */
+}
+
+.dialog-options li {
+  margin-bottom: 0.5em;
+  width: 70%; /* Add this property to set the width of the buttons, adjust the percentage as needed */
+}
+
+
+/* Style dialog options as FFVII-style rectangles */
+.dialog-options button {
+  background-color: #222222;
+  border: 3px double #8b8989;
+  color: #ffffff; /* White text color */
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dialog-options button:hover {
+  background-color: #483d8b;
+  text-decoration: none;
+}
+
+/* Dialog box */
+.dialog-container {
+  display: flex;
+  background-color: #222222;
+  border: 3px double #8b8989;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+/* Character image container */
+.dialog-image-container {
+  width: 25%;
+  height: 150px; /* Adjust the height to match your character image */
+  background-color: #696969; /* Placeholder background color */
+  margin-right: 1em;
+}
+
+/* Dialog text container */
+.dialog-text-container {
+  width: 75%;
+  position: relative;
+  padding: 1em;
+  background-color: #222222; /* FFVII-style text container background color */
+  border: 3px double #8b8989; /* FFVII-style border */
+  color: #ffffff; /* White text color */
+}
+
+/* Greeting and response text positioning */
+.dialog-greeting {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: transparent; /* Transparent background */
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+.dialog-response {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: transparent; /* Transparent background */
+  padding: 1em;
+  box-sizing: border-box;
+  display: none; /* Hide the response element initially */
+  z-index: 1; /* Ensure the response text appears above the greeting */
+}
+
+/* Character image container */
+.dialog-image-container {
+  width: 25%;
+  height: 150px; /* Adjust the height to match your character image */
+  background-color: #696969; /* Placeholder background color */
+  margin-right: 1em;
+  overflow: hidden; /* Add this to hide the excess part of the image */
+}
+
+.character-image {
+  width: 100%; /* Stretch the image to fit the container width */
+  height: 100%; /* Stretch the image to fit the container height */
+  object-fit: fill; /* This will now be ignored, but you can leave it here */
+}
+
+.character-name {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ffffff; /* White text color */
+}
+
+.more-button {
+  background-color: #222222;
+  border: 3px double #8b8989;
+  color: #ffffff; /* White text color */
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  display: inline-block;
+  position: relative;
+  bottom: 5px;
+  right: 5px;
+}
+
+.more-button:hover {
+  background-color: #483d8b;
+  text-decoration: none;
+}
+
+.dialog-text-wrapper {
+  position: relative;
+}
+
+.more-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.dialog-options button i {
+  margin-right: 8px;
+}
+
+.dialog-options button span {
+  flex-grow: 1;
+}
+
+.dialog-options button:not(.no-icon) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
