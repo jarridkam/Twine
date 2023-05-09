@@ -1,3 +1,18 @@
+------------------------------ Actions ------------------------------
+
+action: "set new options"
+action: "remove option"
+action: "replace option", newOption: {text: "Replacement option text", response: "This is the replacement option's response."}
+action: "add option", newOption: {text: "New option text", response: "This is the new option's response."}
+action: "goodbye"
+
+------------------------------ Conditions ------------------------------
+
+condition: "stats.intelligence >= 5"
+condition: "boolean"
+
+------------------------------ EXAMPLES ------------------------------
+
 <<set $dialogHub = [
   {text: "Tell me about the mountains.", response: "They're beautiful!"},
   {text: "Why is it so green?", response: "All the rain I suppose"},
