@@ -1,0 +1,35 @@
+<<set $dialogHub = [
+  {text: "Tell me about the mountains.", response: "They're beautiful!"},
+  {text: "Why is it so green?", response: "All the rain I suppose"},
+  {text: "I had other questions.", response: "Alright.", action: "return to original options"},
+]>>
+
+<<set $johnsGreeting = [
+  {text: "Hello, I see you have become stronger!", priority: 2},
+  {text: "Greetings, mighty warrior!", priority: 3}
+]>>
+
+<<set $johnsGoodbyes = [
+  {text: "Goodbye!", priority: 2, action: "goodbye"}
+]>>
+
+
+<<set $dialogOptions = {
+  char: $char_john,
+  items: [
+    {
+      text: "What's your name?",
+      response: "John ... ::I'm the local hunter.",
+      condition: "stats.intelligence >= 5",
+    },
+    {text: "What's your name?", response: "John ... ::I'm the local hunter."},
+    {text: "Tell me about the area.", response: "This area is mountainous and green.", action: "set new options", newOptions: $dialogHub},
+    {text: "How's the weather today?", response: "It's beautiful!::*Haha* That's a little joke we tell here."},
+        {text: "Add a new option.", response: "Here's a new option.", action: "add option", newOption: {text: "New option text", response: "This is the new option's response."}},
+    {text: "Remove this option.", response: "This option will be removed.", action: "remove option"},
+    {text: "Replace this option.", response: "This option will be replaced.", action: "replace option", newOption: {text: "Replacement option text", response: "This is the replacement option's response."}},
+  ],
+  greetings: $johnsGreeting,
+  goodbyes: $johnsGoodbyes
+}>> <<dialog $dialogOptions>>
+
