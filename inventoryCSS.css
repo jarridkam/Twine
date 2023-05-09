@@ -1,3 +1,8 @@
+/* ---------- MENU WINDOW ----------*/
+
+
+
+
 .modal {
   position: fixed;
   z-index: 1;
@@ -63,3 +68,98 @@
 #customButton:hover {
   background-color: #2D4B4F;
 }
+
+.tab {
+  overflow: hidden;
+  border-bottom: 2px solid #50665F;
+  margin-top: 10px;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  color: #A3ABA0;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #50665F;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #2D4B4F;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 20px;
+  border-top: none;
+}
+
+
+
+/*---------- Menu UI ----------*/
+
+
+
+
+.level-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.level-bar {
+  flex-grow: 1;
+  height: 4px;
+  background-color: #748B7E;
+  margin: 0 10px;
+}
+
+.level-info {
+  color: #A3ABA0;
+}
+
+.attribute-skill-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.attribute-box,
+.skill-box {
+  flex-basis: 48%;
+  background-color: #2D4B4F;
+  padding: 10px;
+  border: 2px solid #50665F;
+  border-radius: 5px;
+}
+
+.box-title {
+  text-align: center;
+  color: #A3ABA0;
+  margin-bottom: 10px;
+}
+
+.attributes-content, .skills-content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 10px;
+}
+
+.attribute-item, .skill-item {
+  flex: 0 0 50%;
+  text-align: center;
+}
+
+
