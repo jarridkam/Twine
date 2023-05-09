@@ -6,16 +6,19 @@ $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', function() {
 
     // Add the custom modal
     $('body').append('<div id="customModal" class="modal" style="display:none;">' +
-      '<div class="modal-content">' +
-        '<div class="modal-header">' +
-          '<span class="close">&times;</span>' +
-          '<h3>Custom Modal Window</h3>' +
-        '</div>' +
-        '<div class="modal-body">' +
-          '<p id="modalContent">This is a custom modal window.</p>' +
-        '</div>' +
-      '</div>' +
-    '</div>');
+  '<div class="modal-content">' +
+    '<div class="modal-header">' +
+      '<h3>Custom Modal Window</h3>' +
+    '</div>' +
+    '<div class="modal-body">' +
+      '<p id="modalContent">This is a custom modal window.</p>' +
+    '</div>' +
+    '<div class="modal-footer">' +
+      '<span class="close">&times;</span>' +
+    '</div>' +
+  '</div>' +
+'</div>');
+
 
     // Make the modal window draggable
     $('#customModal .modal-content').draggable({ handle: ".modal-header" });
@@ -39,4 +42,6 @@ $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', function() {
       }
     }
   });
+});
+
 });
