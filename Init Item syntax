@@ -1,0 +1,15 @@
+<<set $items to {
+  general: [
+    {name: "Health Potion", description: "Restores health."},
+    {name: "Cigarette", description: "Calms the nerves."}
+  ],
+  equipment: [
+    // Add equipment items here
+  ],
+  quest: [
+    // Add quest items here
+  ]
+}>>
+
+<<print  $items.general[0].name>>
+
