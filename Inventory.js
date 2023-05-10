@@ -1,5 +1,3 @@
-/////////////// -Inventory- ////////////////
-
 // Load jQuery UI
 $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', function() {
   $(document).ready(function() {
@@ -10,8 +8,8 @@ $.getScript('https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', function() {
 $('body').append('<div id="customModal" class="modal" style="display:none;">' +
   '<div class="modal-content">' +
     '<div class="modal-header">' +
-      '<h3>Custom Modal Window</h3>' +
-      '<div class="tab">' +
+      '<h3 style="text-align: center;">- Drogg Harbor -</h3>' +
+      '<div class="tab" id="mainTab">' +
         '<button class="tablinks" id="characterTab">Character</button>' +
         '<button class="tablinks" id="inventoryTab">Inventory</button>' +
       '</div>' +
@@ -34,13 +32,28 @@ $('body').append('<div id="customModal" class="modal" style="display:none;">' +
       '</div>' +
     '</div>' +
     '<div id="Inventory" class="tabcontent" style="display:none;">' +
-      '<p>This is the inventory tab.</p>' +
+      '<div class="tab" id="itemTab">' +
+        '<button class="tablinks" id="generalTab">General</button>' +
+        '<button class="tablinks" id="equipmentTab">Equipment</button>' +
+        '<button class="tablinks" id="questTab">Quest</button>' +
+      '</div>' +
+      '<div id="General" class="tabcontent">' +
+        '<!-- General tab content here -->' +
+      '</div>' +
+      '<div id="Equipment" class="tabcontent" style="display:none;">' +
+        '<!-- Equipment tab content here -->' +
+      '</div>' +
+      '<div id="Quest" class="tabcontent" style="display:none;">' +
+        '<!-- Quest tab content here -->' +
+      '</div>' +
     '</div>' +
     '<div class="modal-footer">' +
       '<span class="close">&times;</span>' +
     '</div>' +
   '</div>' +
 '</div>');
+
+
 
 
     // Make the modal window draggable
@@ -122,7 +135,40 @@ $('body').append('<div id="customModal" class="modal" style="display:none;">' +
     $('#inventoryTab').on('click', function(e) {
       openTab(e, 'Inventory');
     });
+    function displayItems(category) {
+  const items = State.variables.characterInventory[category];
+  const container = $('<div class="item-container"></div>');
+  container.append('<div class="item-column"><strong>Name</strong></div><div class="item-column"><strong>Quantity</strong></div><div class="item-column"><strong>Description</strong></div>');
+
+  items.forEach(item => {
+    container.append('<div class="item-column">' + item.name + '</div><div class="item-column">' + item.quantity + '</div><div class="item-column">' + item.description + '</div>');
+  });
+
+  $('#Inventory .tabcontent').hide();
+  $('#Inventory').append(container);
+}
+
+$('#generalTab').on('click', function() {
+  $('.item-container').remove();
+  displayItems('general');
+  $(this).addClass('active');
+  $('#equipmentTab, #questTab').removeClass('active');
+});
+
+$('#equipmentTab').on('click', function() {
+  $('.item-container').remove();
+  displayItems('equipment');
+  $(this).addClass('active');
+  $('#generalTab, #questTab').removeClass('active');
+});
+
+$('#questTab').on('click', function() {
+  $('.item-container').remove();
+  displayItems('quest');
+  $(this).addClass('active');
+  $('#generalTab, #equipmentTab').removeClass('active');
+});
+
 
   });
 });
-
