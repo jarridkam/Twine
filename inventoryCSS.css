@@ -163,3 +163,13 @@
 }
 
 
+.item-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.item-column {
+  padding: 5px;
+  border: 1px solid #ccc;
+}
