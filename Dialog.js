@@ -6,11 +6,13 @@ Macro.add("character", {
   handler: function () {
     const characterName = this.args[0];
     const characterImage = this.args[1];
+    const characterFaction = this.args[2] || "none";
 
     // Save the character data in State.variables
     State.variables.character = {
       name: characterName,
       image: characterImage,
+      faction: characterFaction,
     };
   },
 });
@@ -29,6 +31,7 @@ function getNestedVar(variable) {
 
   return obj;
 }
+
     
 /////////////// -Dialog- ///////////////
 document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />');
@@ -50,27 +53,31 @@ Macro.add('dialog', {
     const greetings = dialogOptions.greetings || [];
     const goodbyes = dialogOptions.goodbyes || [];
 
-    function getGreeting(greetings) {
-    let selectedGreeting = '';
-    let maxPriority = -1;
+  function getGreeting(greetings) {
+  // Check if 'stats' has been initialized
+  if (!State.variables.stats) {
+    State.variables.stats = {};
+  }
 
-    greetings.forEach((greeting) => 
-    {
-      let showGreeting = true;
+  let selectedGreeting = '';
+  let maxPriority = -1;
 
-      if (greeting.condition) {
-        const conditionFunction = new Function('stats', 'return ' + greeting.condition);
-        showGreeting = conditionFunction(State.variables.stats);
-      }
+  greetings.forEach((greeting) => {
+    let showGreeting = true;
 
-      if (showGreeting && (maxPriority === -1 || greeting.priority > maxPriority)) {
-        selectedGreeting = greeting.text;
-        maxPriority = greeting.priority;
-      }
-    });
+    if (greeting.condition) {
+      const conditionFunction = new Function('stats', 'return ' + greeting.condition);
+      showGreeting = conditionFunction(State.variables.stats);
+    }
 
-  		return selectedGreeting;
-	}
+    if (showGreeting && (maxPriority === -1 || greeting.priority > maxPriority)) {
+      selectedGreeting = greeting.text;
+      maxPriority = greeting.priority;
+    }
+  });
+
+  return selectedGreeting;
+}
 
     
     function goBackToPreviousPassage()
@@ -79,25 +86,72 @@ Macro.add('dialog', {
 	}
 
     function getGoodbye(goodbyes) {
-      let selectedGoodbye = '';
-      let maxPriority = -1;
+  // Check if 'stats' has been initialized
+  if (!State.variables.stats) {
+    State.variables.stats = {};
+  }
 
-      goodbyes.forEach((goodbye) => {
-        let showGoodbye = true;
+  let selectedGoodbye = '';
+  let maxPriority = -1;
 
-        if (goodbye.condition) {
-          const conditionFunction = new Function('stats', 'return ' + goodbye.condition);
-          showGoodbye = conditionFunction(State.variables.stats);
-        }
+  goodbyes.forEach((goodbye) => {
+    let showGoodbye = true;
 
-        if (showGoodbye && (maxPriority === -1 || goodbye.priority > maxPriority)) {
-          selectedGoodbye = goodbye.text;
-          maxPriority = goodbye.priority;
-        }
-      });
-
-      return selectedGoodbye;
+    if (goodbye.condition) {
+      const conditionFunction = new Function('stats', 'return ' + goodbye.condition);
+      showGoodbye = conditionFunction(State.variables.stats);
     }
+
+    if (showGoodbye && (maxPriority === -1 || goodbye.priority > maxPriority)) {
+      selectedGoodbye = goodbye.text;
+      maxPriority = goodbye.priority;
+    }
+  });
+
+  return selectedGoodbye;
+}
+
+
+    function modifyReputation(faction, amount) {
+  // Check if 'reputation' has been initialized
+  if (!State.variables.reputation) {
+    State.variables.reputation = {};
+  }
+  // Proceed as before
+  if (State.variables.reputation.hasOwnProperty(faction)) {
+    State.variables.reputation[faction] += amount;
+    updateReputationDisplay(); // Add this line to update the display after modifying the reputation
+  } else {
+    console.error("Faction not found:", faction);
+  }
+}
+
+
+
+    function updateReputationDisplay() {
+  // Check if 'reputation' has been initialized
+  if (!State.variables.reputation) {
+    State.variables.reputation = {};
+  }
+  // Proceed as before
+  const reputationDisplay = $('#reputationDisplay');
+  reputationDisplay.html('');
+
+  const reputationHTML = Object.entries(State.variables.reputation)
+    .map(([faction, reputation]) => {
+      return `<div class="reputation-row">
+                <div class="reputation-faction">${faction}</div>
+                <div class="reputation-value">${reputation}</div>
+              </div>`;
+    }).join('');
+  reputationDisplay.html(reputationHTML);
+}
+
+
+
+// Call this function once to initialize the reputation display
+updateReputationDisplay();
+
 
     const greetingText = getGreeting(greetings);
 
@@ -144,6 +198,8 @@ Macro.add('dialog', {
     moreButton.textContent = '--->';
     moreButton.style.display = 'none';
     dialogTextContainer.appendChild(moreButton);
+
+	
 
   function updateDialogOptions(options) {
   dialogOptionsList.innerHTML = '';
@@ -240,7 +296,35 @@ Macro.add('dialog', {
             const newItem = item.newOption;
             options.splice(index, 1, newItem);
             updateDialogOptions(options);
-          }
+        }
+        
+        else if (item.action === 'addItem') 
+        {
+          const addItemName = item.itemName;
+          const addItemQuantity = item.itemQuantity || 1;
+          const addItemResult = window.addItemToInventory(addItemName, addItemQuantity);
+          dialogGreeting.style.display = 'none';
+          dialogResponse.style.display = 'block';
+          dialogResponse.textContent = addItemResult;
+        }
+        
+        else if (item.action === 'modify reputation') {
+        const faction = item.faction;
+        const value = item.value;
+        modifyReputation(faction, value);
+
+        dialogGreeting.style.display = 'none';
+        dialogResponse.style.display = 'block';
+        dialogResponse.textContent = responseSegments[index][currentSegment];
+
+        if (responseSegments[index].length > 1) {
+          moreButton.style.display = 'block';
+        } else {
+          moreButton.style.display = 'none';
+        }
+}
+
+
         else {
           dialogGreeting.style.display = 'none';
           dialogResponse.style.display = 'block';
@@ -319,5 +403,6 @@ return [''];
 
 return text.split('::');
 }
+
 
 
