@@ -1,4 +1,3 @@
-/* General dialog options */
 .dialog-options {
   list-style-type: none;
   padding: 0;
@@ -7,12 +6,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Add this property to center the buttons horizontally */
+  justify-content: center; 
 }
 
 .dialog-options li {
   margin-bottom: 0.5em;
-  width: 70%; /* Add this property to set the width of the buttons, adjust the percentage as needed */
+  width: 70%; /
 }
 
 
