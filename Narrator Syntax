@@ -1,0 +1,7 @@
+<<dialogBox 'You sit at a desk ajar with files and loose papers. You take a long drag of your <<cycle "$cigarette" autoselect>><<optionsfrom $cigaretteBrands>><</cycle>> brand cigarette. I konw you must have many questions.'>>
+<div id="dialogOptions">
+  <<link "Option 1" "Passage1">><</link>>
+  <<link "Option 2" "Passage2">><</link>>
+  <<link "Option 3" "Passage3">><</link>>
+</div>
+
