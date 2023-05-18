@@ -1,0 +1,8 @@
+<<widget "dialogBox">>
+<div id="dialogWrapper">
+  <img id="narratorImage" src="/Users/jarridkamphenkel/Downloads/TwineImages/Narrator.png">
+  <div id="dialogContent">
+    $args[0]
+  </div>
+</div>
+<</widget>>
