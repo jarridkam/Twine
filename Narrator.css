@@ -1,0 +1,85 @@
+
+
+#dialogWrapper {
+  display: flex;
+  align-items: center;  /* align-items: center will center the child elements along the Y-axis */
+  justify-content: center;
+  background-color: #26323b;
+  border: 2px solid #d2e6cd;
+  padding-top: 10px;
+  padding-right: 25px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  max-width: 800px;
+  height: 200px;
+  margin: auto;
+}
+
+#dialogWrapper::before {
+  content: "Narrator";
+  position: relative;
+  top: -140px;  /* Adjust as needed */
+  left: 60px;
+  color: #EFF2E4;  /* Change to match your desired color */
+}
+
+#narratorImage {
+  display: flex;  /* Adding flex layout to child elements */
+  align-items: center;  /* Center the contents along the Y-axis */
+  width: 25%;
+  height: 80%;
+  margin-right: -35px;  /* Missing semicolon added */
+  position: relative;  /* or absolute, depending on your needs */
+  left: -60px;
+  background-color: #26323b;
+  border: 2px solid #d2e6cd;
+  object-fit: cover;
+}
+
+#dialogContent {
+  /* Changed from display: absolute; to position: relative; */
+  position: relative;
+  width: 75%;
+  height: 80%;
+  padding-right:20px;
+  padding-left: 20px;
+  background-color: #26323b;
+  border: 2px solid #d2e6cd;
+  color: #EFF2E4;
+}
+
+
+#dialogOptions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#dialogOptions a {
+  display: inline-block;
+  position: relative;
+  background-color: #26323b;
+  color: #EFF2E4;
+  padding: 10px 40px;
+  margin: 5px;
+  text-decoration: none;
+  border: 2px solid #d2e6cd;
+  border-radius: 2px;
+  width: 80%;
+  text-align: center;
+  overflow: hidden;  /* Add this line to hide the pseudo-element where it goes outside the button */
+}
+
+#dialogOptions a:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-bottom: 20px solid #d2e6cd;  /* Adjust this to change the size of the cut corner */
+  border-left: 20px solid transparent;
+  width: 0;
+}
+
+
+#dialogOptions a:hover {
+  background-color: #014034;  /* hover background color */
+} 
