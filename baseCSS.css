@@ -53,10 +53,10 @@ body {
 .dialog-text-container {
   position: relative;
   width: 75%;
-  height: 70%;
-  padding-right: 25px;
-  padding-left: 25px;
-  padding-top: 20px; /* Adjust this value to suit your needs */
+  height: 75%;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px; /* Adjust this value to suit your needs */
   background-color: #26323b;
   border: 2px solid #d2e6cd;
   color: #EFF2E4;
@@ -109,6 +109,9 @@ body {
 }
 
 .more-button {
+  position: absolute;
+  bottom: 20px;
+  right: 25px;
   background-color: #26323b;
   border: 2px solid #d2e6cd;
   color: #EFF2E4; 
@@ -116,7 +119,7 @@ body {
   cursor: pointer;
   padding: 0.5em 1em;
   display: inline-block;
-  position: relative;
+  
 }
 
 .more-button:after {
@@ -138,18 +141,6 @@ body {
 .dialog-options button i {
   margin-right: 8px;
 }
-
-.dialog-options button span {
-  flex-grow: 1;
-}
-
-.dialog-options button:not(.no-icon) {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-}
-
 
 .dialog-options button span {
   flex-grow: 1;
