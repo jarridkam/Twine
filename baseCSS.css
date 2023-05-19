@@ -1,140 +1,155 @@
+body {
+  position: relative;
+} 
+
+.dialog-container {
+  position: absolute;
+  top: 0;
+  left: 58%;
+  transform: translateX(-50%) translateY(10%);
+  width: 80%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #26323b;
+  border: 2px solid #d2e6cd;
+  padding: 10px;
+  padding-top: 10px;
+  padding-right: 25px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  height: 200px;
+  margin:auto;
+}
+
+.character-name {
+  position: absolute;
+  top:-20px;
+  left:540px;
+  color: #fff;
+}
+
+
+.dialog-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  height:80%;
+  background-color: #26323b;
+  border: 2px solid #d2e6cd;
+  margin-right: 25px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.character-image {
+  width: 100%;
+  height:100%;
+}
+
+
+.dialog-text-container {
+  position: relative;
+  width: 75%;
+  height: 70%;
+  padding-right: 25px;
+  padding-left: 25px;
+  padding-top: 20px; /* Adjust this value to suit your needs */
+  background-color: #26323b;
+  border: 2px solid #d2e6cd;
+  color: #EFF2E4;
+}
+
 .dialog-options {
   list-style-type: none;
-  padding: 0;
-  margin: 0;
-  margin-top: 1em;
+  margin: 10px;
+  margin-top: -50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; 
+  text-align: center;
 }
 
 .dialog-options li {
-  margin-bottom: 0.5em;
-  width: 70%; /
+  margin-bottom: 10px;
+  width: 75%; 
 }
 
-
-/* Style dialog options as FFVII-style rectangles */
 .dialog-options button {
-  background-color: #222222;
-  border: 3px double #8b8989;
-  color: #ffffff; /* White text color */
+  background-color: #26323b;
+  border: 2px solid #d2e6cd;
+  color: #EFF2E4; 
   text-decoration: none;
   cursor: pointer;
-  padding: 0.5em 1em;
+  padding: 10px 10px;
   display: inline-block;
   width: 100%;
   box-sizing: border-box;
-}
-
-.dialog-options button:hover {
-  background-color: #483d8b;
-  text-decoration: none;
-}
-
-/* Dialog box */
-.dialog-container {
-  display: flex;
-  background-color: #222222;
-  border: 3px double #8b8989;
-  padding: 1em;
-  margin-bottom: 1em;
-}
-
-/* Character image container */
-.dialog-image-container {
-  width: 25%;
-  height: 150px; /* Adjust the height to match your character image */
-  background-color: #696969; /* Placeholder background color */
-  margin-right: 1em;
-}
-
-/* Dialog text container */
-.dialog-text-container {
-  width: 75%;
   position: relative;
-  padding: 1em;
-  background-color: #222222; /* FFVII-style text container background color */
-  border: 3px double #8b8989; /* FFVII-style border */
-  color: #ffffff; /* White text color */
+  overflow: hidden;
 }
 
-/* Greeting and response text positioning */
-.dialog-greeting {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: transparent; /* Transparent background */
-  padding: 1em;
-  box-sizing: border-box;
-}
-
-.dialog-response {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: transparent; /* Transparent background */
-  padding: 1em;
-  box-sizing: border-box;
-  display: none; /* Hide the response element initially */
-  z-index: 1; /* Ensure the response text appears above the greeting */
-}
-
-/* Character image container */
-.dialog-image-container {
-  width: 25%;
-  height: 150px; /* Adjust the height to match your character image */
-  background-color: #696969; /* Placeholder background color */
-  margin-right: 1em;
-  overflow: hidden; /* Add this to hide the excess part of the image */
-}
-
-.character-image {
-  width: 100%; /* Stretch the image to fit the container width */
-  height: 100%; /* Stretch the image to fit the container height */
-  object-fit: fill; /* This will now be ignored, but you can leave it here */
-}
-
-.character-name {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #ffffff; /* White text color */
-}
-
-.more-button {
-  background-color: #222222;
-  border: 3px double #8b8989;
-  color: #ffffff; /* White text color */
-  text-decoration: none;
-  cursor: pointer;
-  padding: 0.5em 1em;
-  display: inline-block;
-  position: relative;
-  bottom: 5px;
-  right: 5px;
-}
-
-.more-button:hover {
-  background-color: #483d8b;
-  text-decoration: none;
-}
-
-.dialog-text-wrapper {
-  position: relative;
-}
-
-.more-button {
+.dialog-options button:after {
+  content: '';
   position: absolute;
   bottom: 0;
   right: 0;
+  border-bottom: 20px solid #d2e6cd;
+  border-left: 20px solid transparent;
+  width: 0;
+}
+
+.dialog-options button:hover {
+  background-color: #d2e6cd;
+  color:#26323b;
+  text-decoration: none;
+}
+
+.more-button {
+  background-color: #26323b;
+  border: 2px solid #d2e6cd;
+  color: #EFF2E4; 
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  display: inline-block;
+  position: relative;
+}
+
+.more-button:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-bottom: 20px solid #d2e6cd;
+  border-left: 20px solid transparent;
+  width: 0;
+}
+
+.more-button:hover {
+  background-color: #d2e6cd;
+  color:#26323b;
+  text-decoration: none;
 }
 
 .dialog-options button i {
   margin-right: 8px;
 }
+
+.dialog-options button span {
+  flex-grow: 1;
+}
+
+.dialog-options button:not(.no-icon) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
 
 .dialog-options button span {
   flex-grow: 1;
