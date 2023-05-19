@@ -1,5 +1,3 @@
-
-
 /////////////// -Character- ///////////////
 
 Macro.add("character", {
@@ -31,6 +29,7 @@ function getNestedVar(variable) {
 
   return obj;
 }
+
 
     
 /////////////// -Dialog- ///////////////
@@ -158,6 +157,18 @@ updateReputationDisplay();
     const characterName = document.createElement('div');
     characterName.className = 'character-name';
     characterName.textContent = character.name;
+	
+    if (character && character.name) {
+  characterName.textContent = character.name;
+} else {
+  console.error('Character or character.name is undefined', character);
+}
+
+try {
+  this.output.insertBefore(characterName, dialogContainer);
+} catch (error) {
+  console.error('Failed to insert characterName before dialogContainer', error);
+}
 
     const dialogContainer = document.createElement('div');
     dialogContainer.className = 'dialog-container';
