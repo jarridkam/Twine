@@ -35,38 +35,51 @@ function getNestedVar(variable) {
 
   return obj;
 }
-
-
     
 /////////////// -Dialog- ///////////////
 document.head.insertAdjacentHTML('beforeend', '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />');
 
 function evaluateCondition(condition) {
-  if (!condition) return true;
+    if (!condition) return true;
 
-  const [attributeOrSkill, operator, value] = condition.split(/\s+/);
-  const actualValue = attributeOrSkill.includes(".") ? 
-                      eval("State.variables." + attributeOrSkill) : 
-                      (State.variables.attributes[attributeOrSkill] || State.variables.skills[attributeOrSkill]);
+    // Split the condition into its components
+    const [attributeOrSkill, operator, value] = condition.split(/\s+/);
 
-  switch (operator) {
-    case ">":
-      return actualValue > Number(value);
-    case ">=":
-      return actualValue >= Number(value);
-    case "<":
-      return actualValue < Number(value);
-    case "<=":
-      return actualValue <= Number(value);
-    case "==":
-      return actualValue == Number(value);
-    case "!=":
-      return actualValue != Number(value);
-    default:
-      console.error("Invalid operator in condition:", operator);
-      return false;
-  }
+    // Check for reputation conditions
+    if (attributeOrSkill.startsWith("reputation.")) {
+        const faction = attributeOrSkill.split(".")[1];
+        const actualValue = State.variables.reputation[faction];
+        return compareValues(actualValue, operator, Number(value));
+    }
+
+    // Check for stats conditions
+    const actualValue = attributeOrSkill.includes(".") ? 
+                        eval("State.variables." + attributeOrSkill) : 
+                        (State.variables.attributes[attributeOrSkill] || State.variables.skills[attributeOrSkill]);
+    return compareValues(actualValue, operator, Number(value));
 }
+
+function compareValues(actualValue, operator, comparisonValue) {
+    switch (operator) {
+        case ">":
+            return actualValue > comparisonValue;
+        case ">=":
+            return actualValue >= comparisonValue;
+        case "<":
+            return actualValue < comparisonValue;
+        case "<=":
+            return actualValue <= comparisonValue;
+        case "==":
+            return actualValue == comparisonValue;
+        case "!=":
+            return actualValue != comparisonValue;
+        default:
+            console.error("Invalid operator in condition:", operator);
+            return false;
+    }
+}
+
+
 
 Macro.add('dialog', {
   handler: function () {
@@ -257,35 +270,42 @@ Macro.add('dialog', {
           button.addEventListener('click', () => {
             selectedIndex = index;
             currentSegment = 0;
-            responseSegments[index] = processResponseText(item.response);
 
+// Check for responseCondition
+let debugInfo = ""; // Debugging line
+if (item.responseCondition && item.responseCondition.condition) {
+    debugInfo += "Checking responseCondition..."; // Debugging line
+    if (evaluateCondition(item.responseCondition.condition)) {
+        debugInfo += " Condition met!"; // Debugging line
+        responseSegments[index] = processResponseText(item.responseCondition.text);
+    } else {
+        debugInfo += " Condition not met."; // Debugging line
+        responseSegments[index] = processResponseText(item.response);
+    }
+} else {
+    debugInfo += " Using default response."; // Debugging line
+    responseSegments[index] = processResponseText(item.response);
+}
+dialogResponse.textContent += " [DEBUG: " + debugInfo + "]"; // Debugging line
+
+
+            dialogGreeting.style.display = 'none';
+            dialogResponse.style.display = 'block';
+            dialogResponse.textContent = responseSegments[index][currentSegment];
+
+            if (responseSegments[index].length > 1) {
+              moreButton.style.display = 'block';
+            } else {
+              moreButton.style.display = 'none';
+            }
+
+            // Handle different actions
             if (item.action === 'set new options') {
-              dialogGreeting.style.display = 'none';
-              dialogResponse.style.display = 'block';
-              dialogResponse.textContent = responseSegments[index][currentSegment];
-
-              if (responseSegments[index].length > 1) {
-                moreButton.style.display = 'block';
-              } else {
-                moreButton.style.display = 'none';
-              }
               updateDialogOptions(item.newOptions);
             } else if (item.action === 'return to original options') {
-              dialogGreeting.style.display = 'none';
-              dialogResponse.style.display = 'block';
-              dialogResponse.textContent = responseSegments[index][currentSegment];
-
-              if (responseSegments[index].length > 1) {
-                moreButton.style.display = 'block';
-              } else {
-                moreButton.style.display = 'none';
-              }
-
               updateDialogOptions(dialogOptions.items);
             } else if (item.action === 'goodbye') {
               const goodbyeText = getGoodbye(goodbyes);
-              dialogGreeting.style.display = 'none';
-              dialogResponse.style.display = 'block';
               dialogResponse.textContent = goodbyeText;
             } else if (item.action === 'add option' && !item.optionAdded) {
               const newItem = item.newOption;
@@ -303,34 +323,12 @@ Macro.add('dialog', {
               const addItemName = item.itemName;
               const addItemQuantity = item.itemQuantity || 1;
               const addItemResult = window.addItemToInventory(addItemName, addItemQuantity);
-              dialogGreeting.style.display = 'none';
-              dialogResponse.style.display = 'block';
               dialogResponse.textContent = addItemResult;
             } else if (item.action === 'modify reputation') {
               const faction = item.faction;
               const operation = item.operation;
               const value = item.value;
               modifyReputation(faction, operation, value);
-
-              dialogGreeting.style.display = 'none';
-              dialogResponse.style.display = 'block';
-              dialogResponse.textContent = responseSegments[index][currentSegment];
-
-              if (responseSegments[index].length > 1) {
-                moreButton.style.display = 'block';
-              } else {
-                moreButton.style.display = 'none';
-              }
-            } else {
-              dialogGreeting.style.display = 'none';
-              dialogResponse.style.display = 'block';
-              dialogResponse.textContent = responseSegments[index][currentSegment];
-
-              if (responseSegments[index].length > 1) {
-                moreButton.style.display = 'block';
-              } else {
-                moreButton.style.display = 'none';
-              }
             }
           });
 
@@ -389,6 +387,7 @@ Macro.add('dialog', {
   },
 });
 
+
 function processResponseText(text) {
   if (!text) {
     return [''];
@@ -426,4 +425,3 @@ function displayReputationChangeNotification(faction, operation, amount) {
         }, 500); // This should match the transition duration in the CSS
     }, 3000);
 }
-
