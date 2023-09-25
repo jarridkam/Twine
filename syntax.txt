@@ -6,6 +6,11 @@ action: "replace option", newOption: {text: "Replacement option text", response:
 action: "add option", newOption: {text: "New option text", response: "This is the new option's response."}
 action: "goodbye"
 
+{action: "modify reputation",
+faction: "Drogg Harbor Police",
+operation: "+",
+value: 3}
+
 ------------------------------ Conditions ------------------------------
 
 condition: "stats.intelligence >= 5"
